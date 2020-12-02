@@ -3,6 +3,9 @@ const express = require('express');
 const http = require('http')
 const socketio = require('socket.io')
 const cors = require('cors')
+const jwt = require('jsonwebtoken');
+const dbConnect = require('./connectDB');
+const bcrypt = require('bcrypt');
 
 const app = express()
 const port =7000
