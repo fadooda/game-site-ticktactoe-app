@@ -13,7 +13,7 @@ const options={
    }
 app.use(express.json())
 var corsOptions = {
-    origin: 'https://free-games-online.netlify.app',
+    origin: 'https://localhost:3000',
     optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
   }
 
