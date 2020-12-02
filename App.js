@@ -21,7 +21,7 @@ app.use(express.json())
 const server = http.createServer(app)  
 const io = socketio(server, options);
 
-const jwt = require('jsonwebtoken')
+
 var rooms = require('./rooms');
 const tictactoeRoomText='Join a tictactoe game!'
 
