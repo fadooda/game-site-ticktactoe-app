@@ -9,7 +9,7 @@ const bcrypt = require('bcrypt');
 
 const app = express()
 const port =7000
-
+app.options('/games/authenticate', cors()) // enable pre-flight request for DELETE request
 //set option to include cors as true to bypass cors error
 
 app.use(express.json())
@@ -48,6 +48,26 @@ io.on("connection", (socket)=>{
     })
 })
 
+app.get('/games/authenticate',cors(), authenticateToken, (req,res)=>{
+    res.json(true)
+})
+
+function authenticateToken(req,res,next)
+{
+     const authHeader = req.headers['authorization']
+     const token = authHeader && authHeader.split(' ')[1]
+     if(token == null) 
+     {
+         return res.sendStatus(401)
+     }
+     //console.log(token)
+     //console.log(process.env.ACCESS_TOKEN_SECRET)
+     jwt.verify(token,process.env.ACCESS_TOKEN_SECRET,(err,user)=>{
+         if(err) return res.sendStatus(401)
+         req.user = user 
+         next()
+     })
+}
 
 server.listen(process.env.PORT || port, () => console.log(`Server has started. On port ${process.env.PORT}`));
 
