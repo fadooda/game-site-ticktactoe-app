@@ -30,6 +30,7 @@ const tictactoeRoomText='Join a tictactoe game!'
 io.on("connection", (socket)=>{
     //console.log("here")
     //if(authenticateToken)
+    console.log("Client connected");
     socket.on("generateRooms",()=>{ //listens to generate rooms if someone emits to it then it will call this 
         let roomtosend=rooms.roomDetails()
         //console.log(roomtosend)
@@ -37,8 +38,9 @@ io.on("connection", (socket)=>{
     })
 
     socket.on("joinRoom",(room,user)=>{
-        let hasjoinedroom=rooms.joinRoom(room,user)
-        console.log(`has joined room${hasjoinedroom}`)
+        rooms.joinRoom(room,user)
+        //console.log(`has joined room${hasjoinedroom}`)
+        console.log("in join room")
         //callback(hasjoinedroom)
         let roomtosend=rooms.roomDetails()
         //console.log(roomtosend)
