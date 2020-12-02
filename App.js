@@ -37,7 +37,9 @@ io.on("connection", (socket)=>{
     })
 
     socket.on("joinRoom",(room,user)=>{
-        rooms.joinRoom(room,user)
+        let hasjoinedroom=rooms.joinRoom(room,user)
+        console.log(`has joined room${hasjoinedroom}`)
+        //callback(hasjoinedroom)
         let roomtosend=rooms.roomDetails()
         //console.log(roomtosend)
         io.emit("generateRooms",roomtosend) //sends to every connected client
