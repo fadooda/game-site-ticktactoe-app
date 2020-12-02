@@ -17,26 +17,6 @@ app.use(express.json())
 
 var refreshTokenList = []
 
-app.post('/token', cors(), (req,res) => {
-    const refreshToken = req.body.token 
-    console.log(refreshToken)
-    if (refreshToken == null) return res.sendStatus(401)
-    if (!refreshTokenList.includes(refreshToken)) return res.sendStatus(403)
-    console.log("here")//check the refresh token here to see if the usere logged out if it exists int the db remove it
-    jwt.verify(refreshToken,process.env.REFRESH_TOKEN_SECRET,  (err,user)=>{
-        if (err) res.sendStatus(403)
-        const accessToken = generateAccessToken({name: user.name})
-        res.json( {accessToken: accessToken})
-    })
-})
-
-app.delete('/logout', cors(), (req,res) =>{
-    //console.log(refreshToken)
-    console.log(req.body.token)
-    refreshTokenList = refreshTokenList.filter(token => token !== req.body.token) //remove it from the database
-    //console.log(refreshToken)
-    res.sendStatus(204)
-})
 
 app.post('/login',cors(), (req,res)=>{
     //const username = req.body.username
@@ -92,15 +72,8 @@ app.post('/register',cors(), (req,res)=>{
             res.json({str})
         }
     })
-
     })
-async function checkPassword(password, user) {
-        console.log(password)
-        console.log(user.password)
-        const compare = await bcrypt.compare(password, user.password);
-       console.log(compare)
-        return compare;
-      }
+
 function generateAccessToken(user)
 {
     return jwt.sign(user,process.env.ACCESS_TOKEN_SECRET,{expiresIn: '120s'})
