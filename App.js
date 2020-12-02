@@ -54,41 +54,7 @@ io.on("connection", (socket)=>{
 app.get('/games/authenticate',cors(), authenticateToken, (req,res)=>{
     res.json(true)
 })
-app.post('/login',cors(), (req,res)=>{
-    //const username = req.body.username
-    //const password = req.body.password
-    //console.log('name '+ password)
-    //db.collection.find_one({'ip': '61.228.93.0'})['history']
-    console.log(process.env.REFRESH_TOKEN_SECRET)
-    let user= {"userName": req.body.userName}
-    dbConnect.getUser(user, async function(dbuser /* a is passed using callback */) {
-        //console.log(a); // a is the object return by the database
-        //console.log(dbuser)
-        if(dbuser==null)
-        {
-            console.log("User doesn't Exist")
-        }else{
-            let str=dbuser
-            const compare = await bcrypt.compare(req.body.password, dbuser.password);
-            if(compare)
-            {
-                const accessToken = generateAccessToken(user)
-                const refreshToken = jwt.sign(user,process.env.REFRESH_TOKEN_SECRET)
-                res.json({accessToken: accessToken, refreshToken: refreshToken})
-            }else{
-                str+= " Incorrect password"
-                res.sendStatus(401)
-            }
 
-            //res.json({str})
-        }
-    })
-    //const user = { name: username}
-    //const accessToken = generateAccessToken(user)
-    //const refreshToken = jwt.sign(user,process.env.REFRESH_TOKEN_SECRET)
-    //refreshTokenList.push(refreshToken) //push it to the database
-    //res.json({accessToken: accessToken, refreshToken: refreshToken})
-    })
 function authenticateToken(req,res,next)
 {
      const authHeader = req.headers['authorization']
