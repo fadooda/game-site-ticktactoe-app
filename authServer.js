@@ -43,6 +43,7 @@ app.post('/login',cors(), (req,res)=>{
     //const password = req.body.password
     //console.log('name '+ password)
     //db.collection.find_one({'ip': '61.228.93.0'})['history']
+    console.log(process.env.REFRESH_TOKEN_SECRET)
     let user= {"userName": req.body.userName}
     dbConnect.getUser(user, async function(dbuser /* a is passed using callback */) {
         //console.log(a); // a is the object return by the database
