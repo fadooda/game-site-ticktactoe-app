@@ -6,17 +6,13 @@ const cors = require('cors')
 
 const app = express()
 const port =7000
-
+app.options('/games/authenticate', cors()) // enable pre-flight request for DELETE request
 //set option to include cors as true to bypass cors error
-const options={
+
+app.use(express.json())
+  const options={
     cors:true
    }
-app.use(express.json())
-var corsOptions = {
-    origin: 'https://localhost:3000',
-    optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
-  }
-
 
 const server = http.createServer(app)  
 const io = socketio(server, options);
@@ -51,7 +47,7 @@ io.on("connection", (socket)=>{
 
 
 
-app.get('/games/authenticate',cors(corsOptions), authenticateToken, (req,res)=>{
+app.get('/games/authenticate',cors(), authenticateToken, (req,res)=>{
     res.json(true)
 })
 

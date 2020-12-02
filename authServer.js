@@ -7,13 +7,9 @@ const bcrypt = require('bcrypt');
 const app = express()
 //var bodyParser = require('body-parser');
 //var urlencodedParser = bodyParser.urlencoded({ extended: false});
-var corsOptions = {
-    origin: 'https://free-games-online.netlify.app',
-    optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
-  }
 
-
-
+app.options('/login', cors()) // enable pre-flight request for DELETE request
+app.options('/register', cors()) // enable pre-flight request for DELETE request
 app.use(express.json())
 //var cors = require('cors')
 
@@ -21,7 +17,7 @@ app.use(express.json())
 
 var refreshTokenList = []
 
-app.post('/token', cors(corsOptions), (req,res) => {
+app.post('/token', cors(), (req,res) => {
     const refreshToken = req.body.token 
     console.log(refreshToken)
     if (refreshToken == null) return res.sendStatus(401)
@@ -34,7 +30,7 @@ app.post('/token', cors(corsOptions), (req,res) => {
     })
 })
 
-app.delete('/logout', cors(corsOptions), (req,res) =>{
+app.delete('/logout', cors(), (req,res) =>{
     //console.log(refreshToken)
     console.log(req.body.token)
     refreshTokenList = refreshTokenList.filter(token => token !== req.body.token) //remove it from the database
@@ -42,7 +38,7 @@ app.delete('/logout', cors(corsOptions), (req,res) =>{
     res.sendStatus(204)
 })
 
-app.post('/login',cors(corsOptions), (req,res)=>{
+app.post('/login',cors(), (req,res)=>{
     //const username = req.body.username
     //const password = req.body.password
     //console.log('name '+ password)
@@ -77,7 +73,7 @@ app.post('/login',cors(corsOptions), (req,res)=>{
     //res.json({accessToken: accessToken, refreshToken: refreshToken})
     })
 
-app.post('/register',cors(corsOptions), (req,res)=>{
+app.post('/register',cors(), (req,res)=>{
     //dbConnect.addUser(req)
     //console.log(req.body.userName)
     //var dbuser;
