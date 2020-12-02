@@ -8,7 +8,7 @@ const app = express()
 //var bodyParser = require('body-parser');
 //var urlencodedParser = bodyParser.urlencoded({ extended: false});
 
-app.options('/login', cors()) // enable pre-flight request for DELETE request
+//app.options('/login', cors()) // enable pre-flight request for DELETE request
 //app.options('/register', cors()) // enable pre-flight request for DELETE request
 app.use(express.json())
 //var cors = require('cors')
