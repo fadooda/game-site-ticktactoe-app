@@ -105,6 +105,10 @@ function authenticateToken(req,res,next)
          next()
      })
 }
+function generateAccessToken(user)
+{
+    return jwt.sign(user,process.env.ACCESS_TOKEN_SECRET,{expiresIn: '120s'})
+}
 
 
 server.listen(process.env.PORT || port, () => console.log(`Server has started. On port ${port}`));
