@@ -101,4 +101,3 @@ function authenticateToken(req,res,next)
      })
 }
 
-app.listen(process.env.PORT || 4000)
