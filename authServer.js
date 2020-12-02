@@ -56,7 +56,7 @@ app.post('/login',cors(), (req,res)=>{
             if(compare)
             {
                 const accessToken = generateAccessToken(user)
-                const refreshToken = jwt.sign(user,process.env.REFRESH_TOKEN_SECRET)
+                const refreshToken = jwt.sign(user,"process.env.REFRESH_TOKEN_SECRET")
                 res.json({accessToken: accessToken, refreshToken: refreshToken})
             }else{
                 str+= " Incorrect password"
@@ -102,7 +102,7 @@ async function checkPassword(password, user) {
       }
 function generateAccessToken(user)
 {
-    return jwt.sign(user,process.env.ACCESS_TOKEN_SECRET,{expiresIn: '120s'})
+    return jwt.sign(user,"process.env.ACCESS_TOKEN_SECRET",{expiresIn: '120s'})
 }
 
 app.listen(7000)

@@ -1,6 +1,6 @@
 require('dotenv').config();
 const MongoClient = require('mongodb').MongoClient;
-const uri = process.env.DATABASE_CONENCT_URL;
+const uri = 'mongodb+srv://stmina:Kyrillos@elijah.j1xwi.mongodb.net/?retryWrites=true&w=majority';
 
 /*async function getUser(req) { 
     return new Promise(function(resolve, reject) {

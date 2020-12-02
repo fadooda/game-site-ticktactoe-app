@@ -5,7 +5,7 @@ const socketio = require('socket.io')
 const cors = require('cors')
 
 const app = express()
-const port =7000
+const port =8000
 app.options('/games/authenticate', cors()) // enable pre-flight request for DELETE request
 //set option to include cors as true to bypass cors error
 
@@ -61,7 +61,7 @@ function authenticateToken(req,res,next)
      }
      //console.log(token)
      //console.log(process.env.ACCESS_TOKEN_SECRET)
-     jwt.verify(token,process.env.ACCESS_TOKEN_SECRET,(err,user)=>{
+     jwt.verify(token,"process.env.ACCESS_TOKEN_SECRET",(err,user)=>{
          if(err) return res.sendStatus(401)
          req.user = user 
          next()
@@ -69,7 +69,7 @@ function authenticateToken(req,res,next)
 }
 
 
-server.listen(process.env.PORT || port, () => console.log(`Server has started. On port ${port}`));
+server.listen(port, () => console.log(`Server has started. On port ${port}`));
 
 
 
