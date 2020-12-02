@@ -8,8 +8,8 @@ const app = express()
 //var bodyParser = require('body-parser');
 //var urlencodedParser = bodyParser.urlencoded({ extended: false});
 
-//app.options('/login', cors()) // enable pre-flight request for DELETE request
-//app.options('/register', cors()) // enable pre-flight request for DELETE request
+app.options('/login', cors()) // enable pre-flight request for DELETE request
+app.options('/register', cors()) // enable pre-flight request for DELETE request
 app.use(express.json())
 //var cors = require('cors')
 
@@ -105,4 +105,4 @@ function generateAccessToken(user)
     return jwt.sign(user,process.env.ACCESS_TOKEN_SECRET,{expiresIn: '120s'})
 }
 
-app.listen(4000)
+app.listen(7700)
