@@ -2,7 +2,7 @@ require('dotenv').config()
 const express = require('express');
 const http = require('http')
 const socketio = require('socket.io')
-
+const cors = require('cors')
 
 const app = express()
 const port =7000
@@ -12,25 +12,10 @@ const options={
     cors:true
    }
 app.use(express.json())
-app.use(function (req, res, next) {
-    // Website you wish to allow to connect
-    // res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
-
-    res.setHeader('Access-Control-Allow-Origin', '*');
-
-    // Request methods you wish to allow
-    res.setHeader('Access-Control-Allow-Methods', 'POST');
-
-    // Request headers you wish to allow
-    res.setHeader('Access-Control-Allow-Headers', '*');
-
-    // Set to true if you need the website to include cookies in the requests sent
-    // to the API (e.g. in case you use sessions)
-    res.setHeader('Access-Control-Allow-Credentials', true);
-
-    // Pass to next layer of middleware
-    next();
-});
+var corsOptions = {
+    origin: 'https://free-games-online.netlify.app',
+    optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
+  }
 
 
 const server = http.createServer(app)  
@@ -66,7 +51,7 @@ io.on("connection", (socket)=>{
 
 
 
-app.get('/games/authenticate', authenticateToken, (req,res)=>{
+app.get('/games/authenticate',cors(corsOptions), authenticateToken, (req,res)=>{
     res.json(true)
 })
 

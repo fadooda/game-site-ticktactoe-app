@@ -1,32 +1,19 @@
 require('dotenv').config();
 const express = require('express');
+const cors = require('cors')
 const jwt = require('jsonwebtoken');
+const dbConnect = require('./connectDB');
 const bcrypt = require('bcrypt');
 const app = express()
 //var bodyParser = require('body-parser');
 //var urlencodedParser = bodyParser.urlencoded({ extended: false});
+var corsOptions = {
+    origin: 'https://free-games-online.netlify.app',
+    optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
+  }
 
-var dbConnect = require('./connectDB');
 
-app.use(function (req, res, next) {
-    // Website you wish to allow to connect
-    // res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
 
-    res.setHeader('Access-Control-Allow-Origin', '*');
-
-    // Request methods you wish to allow
-    res.setHeader('Access-Control-Allow-Methods', 'POST');
-
-    // Request headers you wish to allow
-    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
-
-    // Set to true if you need the website to include cookies in the requests sent
-    // to the API (e.g. in case you use sessions)
-    res.setHeader('Access-Control-Allow-Credentials', true);
-
-    // Pass to next layer of middleware
-    next();
-});
 app.use(express.json())
 //var cors = require('cors')
 
@@ -34,7 +21,7 @@ app.use(express.json())
 
 var refreshTokenList = []
 
-app.post('/token',  (req,res) => {
+app.post('/token', cors(corsOptions), (req,res) => {
     const refreshToken = req.body.token 
     console.log(refreshToken)
     if (refreshToken == null) return res.sendStatus(401)
@@ -47,7 +34,7 @@ app.post('/token',  (req,res) => {
     })
 })
 
-app.delete('/logout',(req,res) =>{
+app.delete('/logout', cors(corsOptions), (req,res) =>{
     //console.log(refreshToken)
     console.log(req.body.token)
     refreshTokenList = refreshTokenList.filter(token => token !== req.body.token) //remove it from the database
@@ -55,7 +42,7 @@ app.delete('/logout',(req,res) =>{
     res.sendStatus(204)
 })
 
-app.post('/login', (req,res)=>{
+app.post('/login',cors(corsOptions), (req,res)=>{
     //const username = req.body.username
     //const password = req.body.password
     //console.log('name '+ password)
@@ -90,7 +77,7 @@ app.post('/login', (req,res)=>{
     //res.json({accessToken: accessToken, refreshToken: refreshToken})
     })
 
-app.post('/register', (req,res)=>{
+app.post('/register',cors(corsOptions), (req,res)=>{
     //dbConnect.addUser(req)
     //console.log(req.body.userName)
     //var dbuser;
