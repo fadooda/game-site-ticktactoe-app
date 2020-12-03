@@ -40,10 +40,10 @@ io.on("connection", (socket)=>{
     socket.on("joinRoom",(room,user)=>{
         rooms.joinRoom(room,user)
         //console.log(`has joined room${hasjoinedroom}`)
-        console.log("in join room")
+        //console.log("in join room")
         //callback(hasjoinedroom)
         let roomtosend=rooms.roomDetails()
-        //console.log(roomtosend)
+        console.log(roomtosend)
         io.emit("generateRooms",roomtosend) //sends to every connected client
     })
     socket.on("disconnect", () => {
