@@ -4,8 +4,7 @@ const http = require('http')
 const socketio = require('socket.io')
 const cors = require('cors')
 const jwt = require('jsonwebtoken');
-const dbConnect = require('./connectDB');
-const bcrypt = require('bcrypt');
+var rooms = require('./rooms');
 
 const app = express()
 const port =7000
@@ -21,7 +20,7 @@ const server = http.createServer(app)
 const io = socketio(server, options);
 
 
-var rooms = require('./rooms');
+
 const tictactoeRoomText='Join a tictactoe game!'
 
 
@@ -30,7 +29,8 @@ const tictactoeRoomText='Join a tictactoe game!'
 io.on("connection", (socket)=>{
     //console.log("here")
     //if(authenticateToken)
-    console.log("Client connected");
+    const _id = socket.id
+    console.log('Socket Connected: ' + _id)
     socket.on("generateRooms",()=>{ //listens to generate rooms if someone emits to it then it will call this 
         let roomtosend=rooms.roomDetails()
         //console.log(roomtosend)
@@ -38,17 +38,25 @@ io.on("connection", (socket)=>{
     })
 
     socket.on("joinRoom",(room,user)=>{
-        rooms.joinRoom(room,user)
-        //console.log(`has joined room${hasjoinedroom}`)
+        console.log("room="+ room)
+        console.log("user="+ user)
+        rooms.joinRoom({id: socket.id,room,user})
+        socket.join(room);
+        //console.log(`has joined room`)
         //console.log("in join room")
         //callback(hasjoinedroom)
         let roomtosend=rooms.roomDetails()
-        console.log(roomtosend)
+        //console.log(roomtosend)
         io.emit("generateRooms",roomtosend) //sends to every connected client
     })
-    socket.on("disconnect", () => {
-        console.log("Client disconnected");
-        //clearInterval(interval);
+    socket.on("disconnect", async () => {
+        //await io.emit('disconnectClient', {customEvent: 'hello world'})
+        console.log('Socket disconnected: ' + _id)
+        console.log("leaving room")
+        rooms.leaveRoom(socket.id)
+        let roomtosend=rooms.roomDetails()
+        //console.log(roomtosend)
+        io.emit("generateRooms",roomtosend) //sends to every connected client
     })
 })
 

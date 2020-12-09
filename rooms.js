@@ -32,22 +32,26 @@ module.exports = {
             //console.log(roomdetail)
             return roomdetail
         },
-    joinRoom: function(room,user){
+    joinRoom: function({ id, room, user }){
         //[card, user]=[req.body]
-        if (rooms[room.title].length>=2)
+        if (rooms[room].length>=2)
         {
             return true;
         }else{
-            rooms[room.title].push(user)
-            console.log(rooms)
+            rooms[room].push({id,user})
+            //console.log(rooms)
             return false;
         }
     },
-    leaveRoom: function(req){
-        console.log(req.body)
-        let room = req.body.card, users=rooms[room.title]
-        let user = req.body.user
-        var usersLeftInRoom = users.filter(function(userElm) { return userElm != user; }); 
-        rooms[room.title]=usersLeftInRoom
+    leaveRoom: function(id){
+        //console.log("room="+room)
+        //console.log("user="+user)
+        for (const [room, users] of Object.entries(rooms)) {
+            rooms[room]=users.filter(function(user) { return  user.id !== id });
+            //console.log(room, users);
+          }
+        //let users=rooms[room]
+        //var usersLeftInRoom = users.filter(function(userElm) { return userElm != user; }); 
+        //rooms[room]=usersLeftInRoom
     }
 }
