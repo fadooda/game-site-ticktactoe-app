@@ -40,14 +40,16 @@ io.on("connection", (socket)=>{
     socket.on("joinRoom",(room,user)=>{
         console.log("room="+ room)
         console.log("user="+ user)
-        rooms.joinRoom({id: socket.id,room,user})
-        socket.join(room);
-        //console.log(`has joined room`)
-        //console.log("in join room")
-        //callback(hasjoinedroom)
-        let roomtosend=rooms.roomDetails()
-        //console.log(roomtosend)
-        io.emit("generateRooms",roomtosend) //sends to every connected client
+        if(rooms.joinRoom({id: socket.id,room,user})){
+            socket.join(room);
+            //console.log(`has joined room`)
+            //console.log("in join room")
+            //callback(hasjoinedroom)
+            let roomtosend=rooms.roomDetails()
+            //console.log(roomtosend)
+            io.emit("generateRooms",roomtosend) //sends to every connected client
+            io.to(room).emit('userRoomData', { room: room, users: rooms.getUsersInRoom(room) });
+        }
     })
     socket.on("disconnect", async () => {
         //await io.emit('disconnectClient', {customEvent: 'hello world'})

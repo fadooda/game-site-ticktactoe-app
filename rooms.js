@@ -34,13 +34,14 @@ module.exports = {
         },
     joinRoom: function({ id, room, user }){
         //[card, user]=[req.body]
+        //console.log(rooms[room].length)
         if (rooms[room].length>=2)
         {
-            return true;
+            return false;
         }else{
             rooms[room].push({id,user})
             //console.log(rooms)
-            return false;
+            return true;
         }
     },
     leaveRoom: function(id){
@@ -53,5 +54,9 @@ module.exports = {
         //let users=rooms[room]
         //var usersLeftInRoom = users.filter(function(userElm) { return userElm != user; }); 
         //rooms[room]=usersLeftInRoom
+    },
+
+    getUsersInRoom: function(roomName){
+        return rooms[roomName]
     }
 }
