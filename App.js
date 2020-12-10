@@ -45,7 +45,7 @@ io.on("connection", (socket)=>{
     socket.on("joinRoom",(room,user)=>{
         console.log("room="+ room)
         console.log("user="+ user)
-        if(rooms.joinRoom({id: socket.id,room,user})){
+        if(rooms.joinRoom({id: socket.id,room,user} && !(room===null && user===null))){
             socket.join(room);
             //console.log(`has joined room`)
             //console.log("in join room")
