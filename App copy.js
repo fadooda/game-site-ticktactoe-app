@@ -36,12 +36,7 @@ io.on("connection", (socket)=>{
         //console.log(roomtosend)
         socket.emit("generateRooms",roomtosend) //sends to the socket who just connected, sent an emit and is listening on the channel
     })
-    socket.on("setBoard",(room,stepNumber,history, xisnext)=>{ //listens to generate rooms if someone emits to it then it will call this 
-        io.to(room).emit('setBoard', stepNumber,history, xisnext );
-    })
-    socket.on("setMappedUser",(room,sharedMappedUser)=>{ //listens to generate rooms if someone emits to it then it will call this 
-        io.to(room).emit('setMappedUser', sharedMappedUser );
-    })
+
     socket.on("joinRoom",(room,user)=>{
         console.log("room="+ room)
         console.log("user="+ user)
@@ -59,16 +54,11 @@ io.on("connection", (socket)=>{
     socket.on("disconnect", async () => {
         //await io.emit('disconnectClient', {customEvent: 'hello world'})
         console.log('Socket disconnected: ' + _id)
-        console.log('users in room=')
-        //console.log(userInRoom)
-        let userInRoom=rooms.leaveRoom(socket.id)
-        console.log(userInRoom)
+        console.log("leaving room")
+        rooms.leaveRoom(socket.id)
         let roomtosend=rooms.roomDetails()
         //console.log(roomtosend)
         io.emit("generateRooms",roomtosend) //sends to every connected client
-        if(userInRoom){
-            io.to(userInRoom).emit('userRoomData', { room: userInRoom, users: rooms.getUsersInRoom(userInRoom) });
-        }
     })
 })
 

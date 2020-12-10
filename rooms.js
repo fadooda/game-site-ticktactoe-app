@@ -47,16 +47,31 @@ module.exports = {
     leaveRoom: function(id){
         //console.log("room="+room)
         //console.log("user="+user)
+        let roomUserIn
         for (const [room, users] of Object.entries(rooms)) {
-            rooms[room]=users.filter(function(user) { return  user.id !== id });
+            rooms[room]=users.filter(function(user) {
+                 if(user.id === id){
+                     roomUserIn=room
+                    }
+                 return  user.id !== id 
+            });
             //console.log(room, users);
           }
         //let users=rooms[room]
         //var usersLeftInRoom = users.filter(function(userElm) { return userElm != user; }); 
         //rooms[room]=usersLeftInRoom
+        return roomUserIn
     },
 
     getUsersInRoom: function(roomName){
-        return rooms[roomName]
+        let userlist=[]
+        let unfiltereduserlist=rooms[roomName]
+        console.log(unfiltereduserlist)
+        for(let index=0; index <unfiltereduserlist.length;index++){
+            
+            console.log(unfiltereduserlist[index].user)
+            userlist.push(unfiltereduserlist[index].user)
+        }
+        return userlist
     }
 }
