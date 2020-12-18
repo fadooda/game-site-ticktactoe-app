@@ -9,8 +9,8 @@ var rooms = require('./rooms');
 const app = express()
 const port =7000
 app.options('/games/authenticate', cors()) // enable pre-flight request for DELETE request
-
 //set option to include cors as true to bypass cors error
+
 app.use(express.json())
   const options={
     cors:true
@@ -27,14 +27,14 @@ const tictactoeRoomText='Join a tictactoe game!'
 
 
 io.on("connection", (socket)=>{
+    //console.log("here")
+    //if(authenticateToken)
     const _id = socket.id
     console.log('Socket Connected: ' + _id)
     socket.on("generateRooms",()=>{ //listens to generate rooms if someone emits to it then it will call this 
-        console.log(":::...Generating Rooms...:::")
         let roomtosend=rooms.roomDetails()
         //console.log(roomtosend)
         socket.emit("generateRooms",roomtosend) //sends to the socket who just connected, sent an emit and is listening on the channel
-        console.log(":::::::Successfully generated rooms:::::::")
     })
     socket.on("setBoard",(room,stepNumber,history, xisnext)=>{ //listens to generate rooms if someone emits to it then it will call this 
         io.to(room).emit('setBoard', stepNumber,history, xisnext );
