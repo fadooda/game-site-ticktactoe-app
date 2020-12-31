@@ -32,7 +32,7 @@ io.on("connection", (socket)=>{
     socket.on("generateRooms",()=>{ //listens to generate rooms if someone emits to it then it will call this 
         console.log(":::...Generating Rooms...:::")
         let roomtosend=rooms.roomDetails()
-        //console.log(roomtosend)
+
         socket.emit("generateRooms",roomtosend) //sends to the socket who just connected, sent an emit and is listening on the channel
         console.log(":::::::Successfully generated rooms:::::::")
     })
@@ -47,24 +47,20 @@ io.on("connection", (socket)=>{
         console.log("user="+ user)
         if((room!==null && user!==null) && rooms.joinRoom({id: socket.id,room,user} )){
             socket.join(room);
-            //console.log(`has joined room`)
-            //console.log("in join room")
-            //callback(hasjoinedroom)
             let roomtosend=rooms.roomDetails()
-            //console.log(roomtosend)
             io.emit("generateRooms",roomtosend) //sends to every connected client
             io.to(room).emit('userRoomData', { room: room, users: rooms.getUsersInRoom(room) });
         }
     })
     socket.on("disconnect", async () => {
-        //await io.emit('disconnectClient', {customEvent: 'hello world'})
+
         console.log('Socket disconnected: ' + _id)
         console.log('users in room=')
-        //console.log(userInRoom)
+
         let userInRoom=rooms.leaveRoom(socket.id)
         console.log(userInRoom)
         let roomtosend=rooms.roomDetails()
-        //console.log(roomtosend)
+
         io.emit("generateRooms",roomtosend) //sends to every connected client
         if(userInRoom){
             io.to(userInRoom).emit('userRoomData', { room: userInRoom, users: rooms.getUsersInRoom(userInRoom) });
@@ -84,8 +80,7 @@ function authenticateToken(req,res,next)
      {
          return res.sendStatus(401)
      }
-     //console.log(token)
-     //console.log(process.env.ACCESS_TOKEN_SECRET)
+
      jwt.verify(token,process.env.ACCESS_TOKEN_SECRET,(err,user)=>{
          if(err) return res.sendStatus(401)
          req.user = user 
@@ -94,6 +89,4 @@ function authenticateToken(req,res,next)
 }
 
 server.listen(process.env.PORT || port, () => console.log(`Server has started. On port ${process.env.PORT}`));
-
-
 
