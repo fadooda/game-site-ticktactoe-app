@@ -21,32 +21,25 @@ module.exports = {
             let roomdetail=[]
             for (const roomName in rooms)
             {
-                //console.log(rooms[roomName])
                 roomdetail.push({
                     title: roomName,
                     text: tictactoeRoomText,
                     userCount: rooms[roomName].length
                 })
             }
-            //console.log("room detail")
-            //console.log(roomdetail)
             return roomdetail
         },
     joinRoom: function({ id, room, user }){
-        //[card, user]=[req.body]
-        //console.log(rooms[room].length)
+
         if (rooms[room].length>=2)
         {
             return false;
         }else{
             rooms[room].push({id,user})
-            //console.log(rooms)
             return true;
         }
     },
     leaveRoom: function(id){
-        //console.log("room="+room)
-        //console.log("user="+user)
         let roomUserIn
         for (const [room, users] of Object.entries(rooms)) {
             rooms[room]=users.filter(function(user) {
@@ -55,11 +48,7 @@ module.exports = {
                     }
                  return  user.id !== id 
             });
-            //console.log(room, users);
           }
-        //let users=rooms[room]
-        //var usersLeftInRoom = users.filter(function(userElm) { return userElm != user; }); 
-        //rooms[room]=usersLeftInRoom
         return roomUserIn
     },
 
