@@ -16,6 +16,7 @@ app.use(express.json())
     cors:true
    }
 
+//set up socketio connection   
 const server = http.createServer(app)  
 const io = socketio(server, options);
 
