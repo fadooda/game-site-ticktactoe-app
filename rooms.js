@@ -11,8 +11,6 @@ function setRooms()
     {
         rooms[tictext+roomNum] = []
     }
-    //console.log("rooms list")
-    //console.log(rooms)
     return rooms
 }
 
