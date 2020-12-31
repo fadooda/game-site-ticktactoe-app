@@ -24,7 +24,7 @@ const io = socketio(server, options);
 const tictactoeRoomText='Join a tictactoe game!'
 
 
-x
+
 io.on("connection", (socket)=>{
     const _id = socket.id
     console.log('Socket Connected: ' + _id)
