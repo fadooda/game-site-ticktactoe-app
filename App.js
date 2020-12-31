@@ -7,7 +7,7 @@ const jwt = require('jsonwebtoken');
 var rooms = require('./rooms');
 
 const app = express()
-const port =7000
+
 app.options('/games/authenticate', cors()) // enable pre-flight request for DELETE request
 
 //set option to include cors as true to bypass cors error
