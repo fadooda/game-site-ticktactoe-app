@@ -61,7 +61,7 @@ io.on("connection", (socket)=>{
         console.log(userInRoom)
         let roomtosend=rooms.roomDetails()  //generate new room list 
 
-        io.emit("generateRooms",roomtosend) //Update all clients listening to 'generateRooms' that user has left room
+        io.emit("generateRooms",roomtosend) //update all clients listening to 'generateRooms' that user has left room
         if(userInRoom){
             io.to(userInRoom).emit('userRoomData', { room: userInRoom, users: rooms.getUsersInRoom(userInRoom) });
         }

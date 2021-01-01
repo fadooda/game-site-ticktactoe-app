@@ -46,8 +46,8 @@ module.exports = {
         },
 
     /**
-     * roomDetails:
-     * Then this function will a join a user to a room (the list value) in the rooms map
+     * joinRoom:
+     * Then this function will join a user to a room (the list value) in the rooms map
      * only if there is less then 2 users in the room
      * 
      * @returns
@@ -56,7 +56,6 @@ module.exports = {
      * Return True
      * 
      * Else if there is 2 or more users in the room
-     * 
      * Return false
      */
     joinRoom: function({ id, room, user }){
@@ -69,6 +68,23 @@ module.exports = {
             return true;
         }
     },
+
+    /**
+     * leaveRoom:
+     * Then this function will remove a user from a room (the list value) in the rooms map
+     * @param
+     * 
+     * 
+     * 
+     * @returns
+     * If the amount of users in the selected room is less then 2 
+     * Then add the user to the rooms list
+     * Return True
+     * 
+     * Else if there is 2 or more users in the room
+     * 
+     * Return false
+     */
     leaveRoom: function(id){
         let roomUserIn
         for (const [room, users] of Object.entries(rooms)) {
