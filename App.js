@@ -57,7 +57,7 @@ io.on("connection", (socket)=>{
         console.log('Socket disconnected: ' + _id)
         console.log('users in room=')
 
-        let userInRoom=rooms.leaveRoom(socket.id)  //leave room
+        let userInRoom=rooms.leaveRoom(socket.id)  //leave room using the socket's id 
         console.log(userInRoom)
         let roomtosend=rooms.roomDetails()  //generate new room list 
 
@@ -69,14 +69,14 @@ io.on("connection", (socket)=>{
 })
 
 /*
-Authenticate jwt token, to ensure that the user has logged in 
+Route get function, it takes the client request and checks if the token is valid 
 */
 app.get('/games/authenticate',cors(), authenticateToken, (req,res)=>{
     res.json(true)
 })
 
 /**
- * authenticateToken: A function that Authenticates a jwt token, to ensure that both the user has logged in and that the user's access token is still not expired.
+ * authenticateToken: A function that Authenticates a jwt token, to ensure that both the user has logged in and that the user's access token is still not expired
  * 
  * AuthenticateToken function will strip the authorization header from the request 
  * Then check the token against the ACCESS_TOKEN_SECRET to verify that the token is vaild
