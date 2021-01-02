@@ -10,7 +10,7 @@ const app = express()
 
 app.options('/games/authenticate', cors()) // enable pre-flight request for DELETE request
 
-//set option to include cors as true to bypass cors error
+//handle cores for socketio
 app.use(express.json())
   const options={
     cors:true
@@ -100,4 +100,4 @@ function authenticateToken(req,res,next)
      })
 }
 
-server.listen(process.env.PORT || port, () => console.log(`Server has started. On port ${process.env.PORT}`));
+server.listen(process.env.PORT || process.env.PORT_DEV, () => console.log(`Server has started. On port ${process.env.PORT}`));
