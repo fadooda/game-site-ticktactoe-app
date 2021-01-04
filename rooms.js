@@ -1,7 +1,7 @@
 require('dotenv').config()
-const rooms = setRooms();
 const tictactoeRoomText='Join a tictactoe game!'
 const roomsNumToGenerate=30; //generate x num of rooms 
+const rooms = setRooms();
 
 /**
  * setRooms:
