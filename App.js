@@ -4,7 +4,8 @@ const http = require('http')
 const socketio = require('socket.io')
 const cors = require('cors')
 const jwt = require('jsonwebtoken');
-var rooms = require('./rooms');
+const rooms = require('./rooms');
+const PORT = process.env.PORT ||  process.env.PORT_DEV
 
 const app = express()
 
@@ -100,4 +101,4 @@ function authenticateToken(req,res,next)
      })
 }
 
-server.listen(process.env.PORT || process.env.PORT_DEV, () => console.log(`Server has started. On port ${process.env.PORT}`));
+server.listen(PORT, ()=>console.log(`Server has started on port: ${PORT}`));

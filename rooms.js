@@ -104,8 +104,6 @@ module.exports = {
         let unfiltereduserlist=rooms[roomName]
         console.log(unfiltereduserlist)
         for(let index=0; index <unfiltereduserlist.length;index++){
-            
-            console.log(unfiltereduserlist[index].user)
             userlist.push(unfiltereduserlist[index].user)
         }
         return userlist
